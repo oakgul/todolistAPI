@@ -2,8 +2,6 @@ const express = require("express");
 const dotenv = require("dotenv");
 const todos = require("./routers/todos");
 const connectDatabase = require("./helpers/connectDB");
-const cors = require("cors");
-
 
 dotenv.config({
     path: "./config/env/config.env"
@@ -12,13 +10,16 @@ dotenv.config({
 connectDatabase();
 
 const app = express();
-app.use(cors());
-
 app.use(express.json());
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE, OPTIONS');
+    next();
+});
 const PORT = process.env.PORT || 5000;
 
-
-
+app.use('/api/todos', todos);
 
 
 
