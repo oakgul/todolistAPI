@@ -15,6 +15,21 @@ const PORT = process.env.PORT || 5000;
 
 app.use('/api/todos', todos);
 
+const corsOpts = {
+    origin: '*',
+  
+    methods: [
+      'GET',
+      'POST',
+    ],
+  
+    allowedHeaders: [
+      'Content-Type',
+    ],
+  };
+  
+  app.use(cors(corsOpts));
+
 
 
 app.listen(PORT, () => {
